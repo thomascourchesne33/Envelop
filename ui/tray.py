@@ -4,14 +4,16 @@ from typing import Callable
 from PyQt6.QtGui import QColor, QIcon, QPainter, QPixmap
 from PyQt6.QtWidgets import QMenu, QSystemTrayIcon
 
-_LOGO_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "envelop_logo.svg")
+from ui import theme
+
+_LOGO_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "icon.ico")
 
 
 def _make_icon(warning: bool = False) -> QIcon:
     if not warning and os.path.exists(_LOGO_PATH):
         return QIcon(_LOGO_PATH)
     # Fallback envelope icon
-    color = "#F38BA8" if warning else "#89B4FA"
+    color = "#E24B4A" if warning else theme.ACCENT
     px = QPixmap(32, 32)
     px.fill(QColor("transparent"))
     p = QPainter(px)

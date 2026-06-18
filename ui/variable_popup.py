@@ -9,92 +9,93 @@ from PyQt6.QtWidgets import (
 )
 
 from template_loader import Template
+from ui import theme
 
-STYLE = """
-* { font-family: "Segoe UI", sans-serif; font-size: 13px; }
-QDialog { background: #FFFFFF; color: #1E293B; }
-QLabel { color: #1E293B; }
-QLabel#title {
+STYLE = f"""
+* {{ font-family: {theme.FONT_FAMILY}; font-size: 13px; }}
+QDialog {{ background: {theme.WHITE}; color: {theme.TEXT_PRIMARY}; }}
+QLabel {{ color: {theme.TEXT_PRIMARY}; }}
+QLabel#title {{
     font-size: 16px;
-    font-weight: bold;
-    color: #1E293B;
-}
-QLabel#var_label {
-    color: #94A3B8;
+    font-weight: 600;
+    color: {theme.TEXT_PRIMARY};
+}}
+QLabel#var_label {{
+    color: {theme.TEXT_MUTED};
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: 1px;
-}
-QLabel#section {
-    color: #94A3B8;
+}}
+QLabel#section {{
+    color: {theme.TEXT_MUTED};
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: 1px;
-}
-QLineEdit {
-    background: #F8FAFC;
-    color: #1E293B;
-    border: 1px solid #E2E8F0;
+}}
+QLineEdit {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_PRIMARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     padding: 8px 12px;
     font-size: 13px;
-}
-QLineEdit:focus { border-color: #2563EB; background: #FFFFFF; }
-QComboBox {
-    background: #F8FAFC;
-    color: #1E293B;
-    border: 1px solid #E2E8F0;
+}}
+QLineEdit:focus {{ border-color: {theme.ACCENT}; background: {theme.WHITE}; }}
+QComboBox {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_PRIMARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     padding: 8px 12px;
     font-size: 13px;
-}
-QComboBox:focus { border-color: #2563EB; background: #FFFFFF; }
-QComboBox::drop-down {
+}}
+QComboBox:focus {{ border-color: {theme.ACCENT}; background: {theme.WHITE}; }}
+QComboBox::drop-down {{
     border: none;
     width: 28px;
-}
-QComboBox::down-arrow {
+}}
+QComboBox::down-arrow {{
     image: none;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 6px solid #94A3B8;
+    border-top: 6px solid {theme.TEXT_MUTED};
     margin-right: 8px;
-}
-QComboBox QAbstractItemView {
-    background: #FFFFFF;
-    color: #1E293B;
-    border: 1px solid #E2E8F0;
+}}
+QComboBox QAbstractItemView {{
+    background: {theme.WHITE};
+    color: {theme.TEXT_PRIMARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
-    selection-background-color: #EFF6FF;
-    selection-color: #2563EB;
+    selection-background-color: {theme.ACCENT_50};
+    selection-color: {theme.ACCENT_TEXT};
     padding: 4px;
-}
-QTextEdit {
-    background: #F8FAFC;
-    color: #475569;
-    border: 1px solid #E2E8F0;
+}}
+QTextEdit {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_SECONDARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     font-family: Consolas, monospace;
     font-size: 12px;
     padding: 8px;
-}
-QPushButton {
-    background: #F1F5F9;
-    color: #475569;
-    border: 1px solid #E2E8F0;
+}}
+QPushButton {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_SECONDARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     padding: 8px 18px;
     font-size: 13px;
-}
-QPushButton:hover { background: #E2E8F0; }
-QPushButton#insert {
-    background: #2563EB;
-    color: #FFFFFF;
+}}
+QPushButton:hover {{ background: {theme.BORDER}; }}
+QPushButton#insert {{
+    background: {theme.ACCENT};
+    color: {theme.WHITE};
     border: none;
-    font-weight: bold;
-}
-QPushButton#insert:hover { background: #1D4ED8; }
-QScrollArea { border: none; background: transparent; }
+    font-weight: 600;
+}}
+QPushButton#insert:hover {{ background: {theme.ACCENT_HOVER}; }}
+QScrollArea {{ border: none; background: transparent; }}
 """
 
 # Dropdown definitions — matched against the normalized variable name (lowercase, underscores)

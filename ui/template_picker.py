@@ -11,59 +11,60 @@ from PyQt6.QtWidgets import (
 )
 
 from template_loader import Template
+from ui import theme
 
 log = logging.getLogger("fcf")
 
 PICKER_WIDTH  = 420
 PICKER_HEIGHT = 380   # fixed — never shrinks
 
-STYLE = """
-QWidget#picker_outer { background: transparent; }
+STYLE = f"""
+QWidget#picker_outer {{ background: transparent; }}
 
-QWidget#picker {
-    background: #FFFFFF;
-    border: 2px solid #93C5FD;
+QWidget#picker {{
+    background: {theme.WHITE};
+    border: 1px solid {theme.BORDER};
     border-radius: 12px;
-}
-QLabel#search {
-    background: #EFF6FF;
-    color: #1D4ED8;
+}}
+QLabel#search {{
+    background: {theme.ACCENT_50};
+    color: {theme.ACCENT_TEXT};
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 600;
     font-family: "Segoe UI";
     padding: 10px 14px;
-    border-bottom: 1px solid #BFDBFE;
+    border-bottom: 1px solid {theme.ACCENT_100};
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-}
-QLabel#category {
-    color: #94A3B8;
+}}
+QLabel#category {{
+    color: {theme.TEXT_MUTED};
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 600;
     font-family: "Segoe UI";
     letter-spacing: 1px;
     padding: 8px 14px 3px 14px;
     background: transparent;
-}
-QLabel#template_row {
-    color: #1E293B;
+}}
+QLabel#template_row {{
+    color: {theme.TEXT_PRIMARY};
     font-size: 13px;
     font-family: "Segoe UI";
     padding: 8px 14px 8px 26px;
     background: transparent;
-}
-QLabel#empty_msg {
-    color: #94A3B8;
+}}
+QLabel#empty_msg {{
+    color: {theme.TEXT_MUTED};
     font-size: 13px;
     font-family: "Segoe UI";
     padding: 20px 14px;
     background: transparent;
-}
-QScrollArea { border: none; background: transparent; }
-QWidget#scroll_content { background: #FFFFFF; }
-QScrollBar:vertical { width: 4px; background: transparent; }
-QScrollBar::handle:vertical { background: #CBD5E1; border-radius: 2px; min-height: 20px; }
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
+}}
+QScrollArea {{ border: none; background: transparent; }}
+QWidget#scroll_content {{ background: {theme.WHITE}; }}
+QScrollBar:vertical {{ width: 4px; background: transparent; }}
+QScrollBar::handle:vertical {{ background: {theme.BORDER}; border-radius: 2px; min-height: 20px; }}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{ height: 0; }}
 """
 
 
@@ -114,7 +115,7 @@ class TemplateRow(QLabel):
     def _refresh(self):
         if self._selected:
             self.setStyleSheet(
-                "background:#EFF6FF; color:#2563EB; "
+                f"background:{theme.ACCENT_50}; color:{theme.ACCENT_TEXT}; "
                 "padding:8px 14px 8px 26px; border-radius:6px; margin:0 6px;"
             )
         else:
@@ -126,7 +127,7 @@ class TemplateRow(QLabel):
     def enterEvent(self, _):
         if not self._selected:
             self.setStyleSheet(
-                "background:#F1F5F9; color:#1E293B; "
+                f"background:{theme.BG_SUBTLE}; color:{theme.TEXT_PRIMARY}; "
                 "padding:8px 14px 8px 26px; border-radius:6px; margin:0 6px;"
             )
 
@@ -173,7 +174,7 @@ class TemplatePicker(QWidget):
         inner_layout.setContentsMargins(0, 0, 0, 0)
         inner_layout.setSpacing(0)
 
-        self._search_label = QLabel("🔍")
+        self._search_label = QLabel("Recherche")
         self._search_label.setObjectName("search")
         self._search_label.setFixedHeight(42)
         inner_layout.addWidget(self._search_label)
@@ -193,7 +194,7 @@ class TemplatePicker(QWidget):
         outer.addWidget(self._inner)
 
     def update_results(self, buffer: str, templates: List[Template]):
-        self._search_label.setText(f"🔍   {buffer}")
+        self._search_label.setText(buffer)
         self._rows.clear()
         self._selected_idx = -1
 

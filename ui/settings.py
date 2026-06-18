@@ -8,45 +8,47 @@ from PyQt6.QtWidgets import (
 )
 
 import config as cfg
+from ui import theme
 
 
-STYLE = """
-QDialog, QWidget {
-    background-color: #1E1E2E;
-    color: #CDD6F4;
-    font-family: Segoe UI;
+STYLE = f"""
+QDialog, QWidget {{
+    background-color: {theme.WHITE};
+    color: {theme.TEXT_PRIMARY};
+    font-family: {theme.FONT_FAMILY};
     font-size: 13px;
-}
-QLineEdit {
-    background-color: #313244;
-    color: #CDD6F4;
-    border: 1px solid #45475A;
-    border-radius: 4px;
-    padding: 4px 8px;
-}
-QPushButton {
-    background-color: #313244;
-    color: #CDD6F4;
-    border: 1px solid #45475A;
-    border-radius: 4px;
+}}
+QLineEdit {{
+    background-color: {theme.BG_SUBTLE};
+    color: {theme.TEXT_PRIMARY};
+    border: 1px solid {theme.BORDER};
+    border-radius: 6px;
+    padding: 6px 10px;
+}}
+QLineEdit:focus {{ border-color: {theme.ACCENT}; }}
+QPushButton {{
+    background-color: {theme.BG_SUBTLE};
+    color: {theme.TEXT_SECONDARY};
+    border: 1px solid {theme.BORDER};
+    border-radius: 6px;
     padding: 6px 14px;
-}
-QPushButton:hover { background-color: #45475A; }
-QPushButton#primary {
-    background-color: #89B4FA;
-    color: #1E1E2E;
+}}
+QPushButton:hover {{ background-color: {theme.BORDER}; }}
+QPushButton#primary {{
+    background-color: {theme.ACCENT};
+    color: {theme.WHITE};
     border: none;
-    font-weight: bold;
-}
-QPushButton#primary:hover { background-color: #B4D0FB; }
-QCheckBox { spacing: 8px; }
-QCheckBox::indicator {
+    font-weight: 600;
+}}
+QPushButton#primary:hover {{ background-color: {theme.ACCENT_HOVER}; }}
+QCheckBox {{ spacing: 8px; }}
+QCheckBox::indicator {{
     width: 16px; height: 16px;
-    border: 1px solid #45475A;
+    border: 1px solid {theme.BORDER};
     border-radius: 3px;
-    background: #313244;
-}
-QCheckBox::indicator:checked { background: #89B4FA; }
+    background: {theme.BG_SUBTLE};
+}}
+QCheckBox::indicator:checked {{ background: {theme.ACCENT}; }}
 """
 
 
@@ -66,14 +68,14 @@ class FirstRunDialog(QDialog):
         layout.setSpacing(16)
 
         title = QLabel("Bienvenue dans Envelop")
-        title.setStyleSheet("font-size: 16px; font-weight: bold; color: #89B4FA;")
+        title.setStyleSheet(f"font-size: 16px; font-weight: 600; color: {theme.ACCENT_TEXT};")
         layout.addWidget(title)
 
         layout.addWidget(QLabel("Choisissez le fichier de modèles (.xlsx) :"))
 
         row = QHBoxLayout()
         self._path_label = QLabel("Aucun fichier sélectionné")
-        self._path_label.setStyleSheet("color: #6C7086; font-size: 12px;")
+        self._path_label.setStyleSheet(f"color: {theme.TEXT_MUTED}; font-size: 12px;")
         self._path_label.setWordWrap(True)
         row.addWidget(self._path_label, 1)
         btn_browse = QPushButton("Parcourir…")
@@ -93,12 +95,12 @@ class FirstRunDialog(QDialog):
         if path:
             self._path = path
             self._path_label.setText(path)
-            self._path_label.setStyleSheet("color: #CDD6F4; font-size: 12px;")
+            self._path_label.setStyleSheet(f"color: {theme.TEXT_PRIMARY}; font-size: 12px;")
 
     def _confirm(self):
         if not self._path:
             self._path_label.setText("Veuillez sélectionner un fichier.")
-            self._path_label.setStyleSheet("color: #F38BA8; font-size: 12px;")
+            self._path_label.setStyleSheet("color: #A32D2D; font-size: 12px;")
             return
         c = cfg.load_config()
         c["xlsx_path"] = self._path
@@ -121,18 +123,18 @@ class SettingsWindow(QDialog):
         layout.setSpacing(20)
 
         title = QLabel("Paramètres")
-        title.setStyleSheet("font-size: 15px; font-weight: bold; color: #89B4FA;")
+        title.setStyleSheet(f"font-size: 15px; font-weight: 600; color: {theme.ACCENT_TEXT};")
         layout.addWidget(title)
 
         # Fichier de modèles
         section1 = QLabel("FICHIER DE MODÈLES")
-        section1.setStyleSheet("color: #6C7086; font-size: 11px; font-weight: bold;")
+        section1.setStyleSheet(f"color: {theme.TEXT_MUTED}; font-size: 11px; font-weight: 600;")
         layout.addWidget(section1)
 
         file_row = QHBoxLayout()
         self._path_label = QLabel(self._config.get("xlsx_path") or "Non configuré")
         self._path_label.setWordWrap(True)
-        self._path_label.setStyleSheet("color: #CDD6F4; font-size: 12px;")
+        self._path_label.setStyleSheet(f"color: {theme.TEXT_PRIMARY}; font-size: 12px;")
         file_row.addWidget(self._path_label, 1)
         btn_modify = QPushButton("Modifier")
         btn_modify.clicked.connect(self._change_file)
@@ -141,7 +143,7 @@ class SettingsWindow(QDialog):
 
         # Caractère déclencheur
         section2 = QLabel("CARACTÈRE DÉCLENCHEUR")
-        section2.setStyleSheet("color: #6C7086; font-size: 11px; font-weight: bold;")
+        section2.setStyleSheet(f"color: {theme.TEXT_MUTED}; font-size: 11px; font-weight: 600;")
         layout.addWidget(section2)
 
         self._trigger_input = QLineEdit(self._config.get("trigger_char", "/"))
@@ -149,12 +151,12 @@ class SettingsWindow(QDialog):
         self._trigger_input.setFixedWidth(60)
         layout.addWidget(self._trigger_input)
         note = QLabel("Le code doit commencer par ce caractère")
-        note.setStyleSheet("color: #6C7086; font-size: 11px;")
+        note.setStyleSheet(f"color: {theme.TEXT_MUTED}; font-size: 11px;")
         layout.addWidget(note)
 
         # Démarrage automatique
         section3 = QLabel("DÉMARRAGE AUTOMATIQUE")
-        section3.setStyleSheet("color: #6C7086; font-size: 11px; font-weight: bold;")
+        section3.setStyleSheet(f"color: {theme.TEXT_MUTED}; font-size: 11px; font-weight: 600;")
         layout.addWidget(section3)
 
         self._autostart_cb = QCheckBox("Lancer Envelop au démarrage de Windows")

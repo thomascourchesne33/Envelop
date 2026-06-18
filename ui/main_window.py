@@ -13,211 +13,212 @@ from PyQt6.QtWidgets import (
 )
 
 from template_loader import Template
+from ui import theme
 
-_LOGO_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "envelop_logo.svg")
+_LOGO_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "icon.ico")
 
-STYLE = """
-* {
-    font-family: "Segoe UI", sans-serif;
+STYLE = f"""
+* {{
+    font-family: {theme.FONT_FAMILY};
     font-size: 13px;
-}
-QMainWindow, QWidget#root {
-    background: #F0F2F5;
-}
+}}
+QMainWindow, QWidget#root {{
+    background: {theme.BG_SUBTLE};
+}}
 
 /* ── Sidebar ── */
-QWidget#sidebar {
-    background: #FFFFFF;
-    border-right: 1px solid #E2E8F0;
-}
-QLabel#sidebar_title {
+QWidget#sidebar {{
+    background: {theme.WHITE};
+    border-right: 1px solid {theme.BORDER};
+}}
+QLabel#sidebar_title {{
     font-size: 11px;
-    font-weight: bold;
-    color: #94A3B8;
+    font-weight: 600;
+    color: {theme.TEXT_MUTED};
     letter-spacing: 1px;
     padding: 0 4px;
-}
-QListWidget {
+}}
+QListWidget {{
     background: transparent;
     border: none;
     outline: none;
-}
-QListWidget::item {
+}}
+QListWidget::item {{
     padding: 9px 12px;
     border-radius: 8px;
-    color: #374151;
+    color: {theme.TEXT_PRIMARY};
     margin: 1px 0;
-}
-QListWidget::item:selected {
-    background: #EFF6FF;
-    color: #2563EB;
-}
-QListWidget::item:hover:!selected {
-    background: #F8FAFC;
-}
+}}
+QListWidget::item:selected {{
+    background: {theme.ACCENT_50};
+    color: {theme.ACCENT_TEXT};
+}}
+QListWidget::item:hover:!selected {{
+    background: {theme.BG_SUBTLE};
+}}
 
 /* ── Header ── */
-QWidget#header {
-    background: #FFFFFF;
-    border-bottom: 1px solid #E2E8F0;
-}
-QLabel#app_name {
+QWidget#header {{
+    background: {theme.WHITE};
+    border-bottom: 1px solid {theme.BORDER};
+}}
+QLabel#app_name {{
     font-size: 17px;
-    font-weight: bold;
-    color: #1E293B;
-}
-QLabel#count_lbl {
+    font-weight: 600;
+    color: {theme.TEXT_PRIMARY};
+}}
+QLabel#count_lbl {{
     font-size: 12px;
-    color: #94A3B8;
-    background: #F1F5F9;
+    color: {theme.ACCENT_TEXT};
+    background: {theme.ACCENT_50};
     border-radius: 10px;
     padding: 2px 10px;
-}
+}}
 
 /* ── Search ── */
-QLineEdit#search {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
+QLineEdit#search {{
+    background: {theme.BG_SUBTLE};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     padding: 8px 14px;
-    color: #1E293B;
+    color: {theme.TEXT_PRIMARY};
     font-size: 13px;
-}
-QLineEdit#search:focus {
-    border-color: #2563EB;
-    background: #FFFFFF;
-}
+}}
+QLineEdit#search:focus {{
+    border-color: {theme.ACCENT};
+    background: {theme.WHITE};
+}}
 
 /* ── Buttons ── */
-QPushButton {
+QPushButton {{
     border-radius: 8px;
     padding: 8px 16px;
     font-size: 13px;
-}
-QPushButton#btn_new {
-    background: #2563EB;
-    color: #FFFFFF;
+}}
+QPushButton#btn_new {{
+    background: {theme.ACCENT};
+    color: {theme.WHITE};
     border: none;
-    font-weight: bold;
+    font-weight: 600;
     padding: 8px 18px;
-}
-QPushButton#btn_new:hover { background: #1D4ED8; }
-QPushButton#btn_file {
-    background: #F8FAFC;
-    color: #475569;
-    border: 1px solid #E2E8F0;
+}}
+QPushButton#btn_new:hover {{ background: {theme.ACCENT_HOVER}; }}
+QPushButton#btn_file {{
+    background: {theme.WHITE};
+    color: {theme.TEXT_SECONDARY};
+    border: 1px solid {theme.BORDER};
     font-size: 12px;
     padding: 7px 14px;
-}
-QPushButton#btn_file:hover { background: #F1F5F9; color: #1E293B; }
-QPushButton#btn_edit {
-    background: #EFF6FF;
-    color: #2563EB;
-    border: 1px solid #BFDBFE;
+}}
+QPushButton#btn_file:hover {{ background: {theme.BG_SUBTLE}; color: {theme.TEXT_PRIMARY}; }}
+QPushButton#btn_edit {{
+    background: {theme.ACCENT_50};
+    color: {theme.ACCENT_TEXT};
+    border: 1px solid {theme.ACCENT_100};
     padding: 6px 14px;
-}
-QPushButton#btn_edit:hover { background: #DBEAFE; }
-QPushButton#btn_delete {
-    background: #FFF1F2;
-    color: #E11D48;
-    border: 1px solid #FECDD3;
+}}
+QPushButton#btn_edit:hover {{ background: {theme.ACCENT_100}; }}
+QPushButton#btn_delete {{
+    background: #FCEBEB;
+    color: #A32D2D;
+    border: 1px solid #F7C1C1;
     padding: 6px 14px;
-}
-QPushButton#btn_delete:hover { background: #FFE4E6; }
-QPushButton#btn_insert {
-    background: #2563EB;
-    color: #FFFFFF;
+}}
+QPushButton#btn_delete:hover {{ background: #F7C1C1; }}
+QPushButton#btn_insert {{
+    background: {theme.ACCENT};
+    color: {theme.WHITE};
     border: none;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 13px;
     padding: 10px 28px;
     border-radius: 10px;
-}
-QPushButton#btn_insert:hover { background: #1D4ED8; }
-QPushButton#btn_insert:disabled {
-    background: #E2E8F0;
-    color: #94A3B8;
-}
-QPushButton:disabled { color: #94A3B8; }
+}}
+QPushButton#btn_insert:hover {{ background: {theme.ACCENT_HOVER}; }}
+QPushButton#btn_insert:disabled {{
+    background: {theme.BORDER};
+    color: {theme.TEXT_MUTED};
+}}
+QPushButton:disabled {{ color: {theme.TEXT_MUTED}; }}
 
 /* ── Detail panel ── */
-QWidget#detail_bg { background: #F0F2F5; }
-QWidget#detail_card {
-    background: #FFFFFF;
+QWidget#detail_bg {{ background: {theme.BG_SUBTLE}; }}
+QWidget#detail_card {{
+    background: {theme.WHITE};
     border-radius: 14px;
-}
-QLabel#tmpl_title {
+}}
+QLabel#tmpl_title {{
     font-size: 18px;
-    font-weight: bold;
-    color: #1E293B;
-}
-QLabel#code_pill {
-    background: #EFF6FF;
-    color: #2563EB;
+    font-weight: 600;
+    color: {theme.TEXT_PRIMARY};
+}}
+QLabel#code_pill {{
+    background: {theme.ACCENT_50};
+    color: {theme.ACCENT_TEXT};
     border-radius: 8px;
     padding: 3px 10px;
     font-family: Consolas, monospace;
     font-size: 12px;
-    font-weight: bold;
-}
-QLabel#cat_pill {
-    background: #F1F5F9;
-    color: #64748B;
+    font-weight: 600;
+}}
+QLabel#cat_pill {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_SECONDARY};
     border-radius: 8px;
     padding: 3px 10px;
     font-size: 12px;
-}
-QLabel#field_label {
-    color: #94A3B8;
+}}
+QLabel#field_label {{
+    color: {theme.TEXT_MUTED};
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: 1px;
-}
-QLabel#field_value {
-    color: #334155;
+}}
+QLabel#field_value {{
+    color: {theme.TEXT_PRIMARY};
     font-size: 13px;
-}
-QLabel#var_chip {
-    background: #F0FDF4;
-    color: #16A34A;
-    border: 1px solid #BBF7D0;
+}}
+QLabel#var_chip {{
+    background: {theme.ACCENT_50};
+    color: {theme.ACCENT_TEXT};
+    border: 1px solid {theme.ACCENT_100};
     border-radius: 6px;
     padding: 2px 9px;
     font-family: Consolas, monospace;
     font-size: 11px;
-}
-QTextEdit#preview {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
+}}
+QTextEdit#preview {{
+    background: {theme.BG_SUBTLE};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
-    color: #475569;
+    color: {theme.TEXT_SECONDARY};
     font-size: 12px;
     padding: 10px;
-}
+}}
 
 /* ── Empty state ── */
-QLabel#empty_state {
-    color: #CBD5E1;
+QLabel#empty_state {{
+    color: {theme.TEXT_MUTED};
     font-size: 15px;
-}
+}}
 
 /* ── Status bar ── */
-QStatusBar {
-    background: #FFFFFF;
-    color: #94A3B8;
+QStatusBar {{
+    background: {theme.WHITE};
+    color: {theme.TEXT_MUTED};
     font-size: 11px;
-    border-top: 1px solid #E2E8F0;
-}
-QStatusBar::item { border: none; }
+    border-top: 1px solid {theme.BORDER};
+}}
+QStatusBar::item {{ border: none; }}
 
 /* ── Scrollbar ── */
-QScrollBar:vertical { width: 5px; background: transparent; }
-QScrollBar::handle:vertical { background: #CBD5E1; border-radius: 3px; min-height: 20px; }
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
-QScrollBar:horizontal { height: 0; }
+QScrollBar:vertical {{ width: 5px; background: transparent; }}
+QScrollBar::handle:vertical {{ background: {theme.BORDER}; border-radius: 3px; min-height: 20px; }}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{ height: 0; }}
+QScrollBar:horizontal {{ height: 0; }}
 
 /* ── Divider ── */
-QFrame#divider { background: #E2E8F0; max-height: 1px; }
+QFrame#divider {{ background: {theme.BORDER}; max-height: 1px; }}
 """
 
 
@@ -315,12 +316,12 @@ class MainWindow(QMainWindow):
 
         hl.addStretch()
 
-        btn_file = QPushButton("📂  Changer de fichier Excel")
+        btn_file = QPushButton("Changer de fichier Excel")
         btn_file.setObjectName("btn_file")
         btn_file.clicked.connect(self._change_file)
         hl.addWidget(btn_file)
 
-        btn_new = QPushButton("＋  Nouveau modèle")
+        btn_new = QPushButton("+ Nouveau modèle")
         btn_new.setObjectName("btn_new")
         btn_new.setFixedHeight(36)
         btn_new.clicked.connect(self._new_template)
@@ -338,7 +339,7 @@ class MainWindow(QMainWindow):
 
         self._search = QLineEdit()
         self._search.setObjectName("search")
-        self._search.setPlaceholderText("🔍  Rechercher un modèle…")
+        self._search.setPlaceholderText("Rechercher un modèle…")
         self._search.textChanged.connect(lambda t: self._filter(t))
         sl.addWidget(self._search)
 
@@ -481,7 +482,7 @@ class MainWindow(QMainWindow):
         for cat in sorted(groups.keys()):
             hdr = QListWidgetItem(cat.upper())
             hdr.setFlags(Qt.ItemFlag.NoItemFlags)
-            hdr.setForeground(QColor("#94A3B8"))
+            hdr.setForeground(QColor(theme.TEXT_MUTED))
             f = hdr.font()
             f.setPointSize(9)
             f.setBold(True)

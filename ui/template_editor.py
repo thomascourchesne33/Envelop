@@ -9,74 +9,75 @@ from PyQt6.QtWidgets import (
 )
 
 from template_loader import Template
+from ui import theme
 
-STYLE = """
-* { font-family: "Segoe UI", sans-serif; font-size: 13px; }
-QDialog { background: #FFFFFF; color: #1E293B; }
-QLabel { color: #1E293B; }
-QLabel#section {
-    color: #94A3B8;
+STYLE = f"""
+* {{ font-family: {theme.FONT_FAMILY}; font-size: 13px; }}
+QDialog {{ background: {theme.WHITE}; color: {theme.TEXT_PRIMARY}; }}
+QLabel {{ color: {theme.TEXT_PRIMARY}; }}
+QLabel#section {{
+    color: {theme.TEXT_MUTED};
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: 1px;
-}
-QLabel#title {
+}}
+QLabel#title {{
     font-size: 16px;
-    font-weight: bold;
-    color: #1E293B;
-}
-QLineEdit, QComboBox {
-    background: #F8FAFC;
-    color: #1E293B;
-    border: 1px solid #E2E8F0;
+    font-weight: 600;
+    color: {theme.TEXT_PRIMARY};
+}}
+QLineEdit, QComboBox {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_PRIMARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     padding: 7px 12px;
     font-size: 13px;
-}
-QLineEdit:focus, QComboBox:focus { border-color: #2563EB; background: #FFFFFF; }
-QComboBox::drop-down { border: none; padding-right: 8px; }
-QComboBox QAbstractItemView {
-    background: #FFFFFF;
-    color: #1E293B;
-    selection-background-color: #EFF6FF;
-    selection-color: #2563EB;
-    border: 1px solid #E2E8F0;
+}}
+QLineEdit:focus, QComboBox:focus {{ border-color: {theme.ACCENT}; background: {theme.WHITE}; }}
+QComboBox::drop-down {{ border: none; padding-right: 8px; }}
+QComboBox QAbstractItemView {{
+    background: {theme.WHITE};
+    color: {theme.TEXT_PRIMARY};
+    selection-background-color: {theme.ACCENT_50};
+    selection-color: {theme.ACCENT_TEXT};
+    border: 1px solid {theme.BORDER};
     border-radius: 6px;
-}
-QTextEdit {
-    background: #F8FAFC;
-    color: #334155;
-    border: 1px solid #E2E8F0;
+}}
+QTextEdit {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_SECONDARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     font-family: Consolas, monospace;
     font-size: 12px;
     padding: 8px;
-}
-QTextEdit:focus { border-color: #2563EB; background: #FFFFFF; }
-QPushButton {
-    background: #F1F5F9;
-    color: #475569;
-    border: 1px solid #E2E8F0;
+}}
+QTextEdit:focus {{ border-color: {theme.ACCENT}; background: {theme.WHITE}; }}
+QPushButton {{
+    background: {theme.BG_SUBTLE};
+    color: {theme.TEXT_SECONDARY};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     padding: 8px 18px;
-}
-QPushButton:hover { background: #E2E8F0; }
-QPushButton#save {
-    background: #2563EB;
-    color: #FFFFFF;
+}}
+QPushButton:hover {{ background: {theme.BORDER}; }}
+QPushButton#save {{
+    background: {theme.ACCENT};
+    color: {theme.WHITE};
     border: none;
-    font-weight: bold;
-}
-QPushButton#save:hover { background: #1D4ED8; }
-QLabel#preview_label {
-    color: #64748B;
+    font-weight: 600;
+}}
+QPushButton#save:hover {{ background: {theme.ACCENT_HOVER}; }}
+QLabel#preview_label {{
+    color: {theme.TEXT_SECONDARY};
     font-family: Consolas;
     font-size: 12px;
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
+    background: {theme.BG_SUBTLE};
+    border: 1px solid {theme.BORDER};
     border-radius: 8px;
     padding: 8px;
-}
+}}
 """
 
 _VAR_RE = re.compile(r"\[([A-Z0-9_ÉÈÊÀÂÙÛÎÔÇ]+)\]", re.IGNORECASE)
