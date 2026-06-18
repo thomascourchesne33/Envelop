@@ -52,7 +52,9 @@ def check_for_update() -> Optional[dict]:
 
 
 def download_and_install(download_url: str) -> bool:
-    """Download the installer from GitHub and launch a silent install. Returns True on success."""
+    """Download the installer from GitHub and launch it visibly (progress window shown,
+    no wizard pages to click through) so the user can see the update happening.
+    Returns True on success."""
     try:
         req = urllib.request.Request(download_url, headers={"User-Agent": "Envelop-Updater"})
         with urllib.request.urlopen(req, timeout=_DOWNLOAD_TIMEOUT) as resp:
@@ -67,8 +69,10 @@ def download_and_install(download_url: str) -> bool:
         with open(installer_path, "wb") as f:
             f.write(data)
 
+        # /SILENT (not /VERYSILENT): skips wizard pages but still shows the install progress
+        # window — visible proof to the user that the update is actually running.
         subprocess.Popen(
-            [installer_path, "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART",
+            [installer_path, "/SILENT", "/SUPPRESSMSGBOXES", "/NORESTART",
              "/CLOSEAPPLICATIONS", "/RESTARTAPPLICATIONS"],
             close_fds=True,
         )

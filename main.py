@@ -119,14 +119,34 @@ class App:
         self._check_for_update()
 
     def _check_for_update(self) -> None:
-        """Run in background thread — checks GitHub Releases and silently installs if newer."""
-        from updater import check_for_update, download_and_install
+        """Run in background thread — checks GitHub Releases, then asks the user before installing."""
+        from updater import check_for_update
         info = check_for_update()
         if not info:
             return
         log.info("Update available: %s", info["version"])
+        self._qt.postEvent(self._qt, _CallbackEvent(lambda i=info: self._prompt_update(i)))
+
+    def _prompt_update(self, info: dict) -> None:
+        reply = QMessageBox.question(
+            self._main_window,
+            "Mise à jour disponible",
+            f"Une nouvelle version d'Envelop ({info['version']}) est disponible.\n\n"
+            "Voulez-vous l'installer maintenant ? La fenêtre d'installation va "
+            "s'afficher puis Envelop redémarrera automatiquement.",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            threading.Thread(target=self._run_update, args=(info,), daemon=True).start()
+
+    def _run_update(self, info: dict) -> None:
+        from updater import download_and_install
         if download_and_install(info["download_url"]):
             self._qt.postEvent(self._qt, _CallbackEvent(self._quit))
+        else:
+            self._qt.postEvent(self._qt, _CallbackEvent(
+                lambda: self._show_toast("Échec du téléchargement de la mise à jour.")
+            ))
 
     def _load_templates(self) -> None:
         path = self._config.get("xlsx_path", "")
